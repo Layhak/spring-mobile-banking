@@ -12,9 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.yaml.snakeyaml.representer.BaseRepresenter;
 
 import java.util.List;
 
@@ -33,28 +31,20 @@ public class UserRestController {
             content = @Content(schema = @Schema(implementation = UserRequest.class),
                     examples = @ExampleObject(value = """
                             {
-                              "username": "sokkhann",
-                              "fullName": "string",
-                              "gender": "male",
-                              "pin": "898989",
-                              "email": "sokkhann@gmail.com",
-                              "password": "string",
-                              "profileImage": "string",
-                              "phoneNumber": "string",
-                              "cityOrProvince": "string",
-                              "khanOrDistrict": "string",
-                              "sangkatOrCommune": "string",
-                              "employeeType": "string",
-                              "companyName": "string",
-                              "mainSourceOfIncome": "string",
-                              "monthlyIncomeRange": 0,
-                              "studentCardId": "string",
-                              "roles": [
-                                "ADMIN","STUFF"
-                              ]
-                            }
-                                                        
-                                                        
+                                  "fullName": "Heng Layhak",
+                                  "gender": "male",
+                                  "password": "string",
+                                  "profileImage": "string",
+                                  "phoneNumber": "string",
+                                  "cityOrProvince": "string",
+                                  "khanOrDistrict": "string",
+                                  "sangkatOrCommune": "string",
+                                  "employeeType": "string",
+                                  "companyName": "string",
+                                  "mainSourceOfIncome": "string",
+                                  "monthlyIncomeRange": 0,
+                                  "studentIdCard": "string"
+                                }
                             """)
 
             )
@@ -94,19 +84,20 @@ public class UserRestController {
     @Operation(summary = "Update user by id")
     // configure swagger to provide the default request body for updating the user
     public BaseResponse<UserResponse> updateUserByID(
-            @PathVariable() String id,@RequestBody UserUpdateRequest userRequest){
+            @PathVariable() String id, @RequestBody UserUpdateRequest userRequest) {
         return BaseResponse.<UserResponse>updateSuccess()
-                .setPayload(userService.updateUserById(id,userRequest));
+                .setPayload(userService.updateUserById(id, userRequest));
     }
 
 
     @PatchMapping("/{id}/disable")
-    public BaseResponse<UserResponse> disableUser(@PathVariable() String id){
+    public BaseResponse<UserResponse> disableUser(@PathVariable() String id) {
         return BaseResponse.<UserResponse>ok()
                 .setPayload(userService.disableUser(id));
     }
+
     @PatchMapping("/{id}/enable")
-    public BaseResponse<UserResponse> enableUser(@PathVariable String id){
+    public BaseResponse<UserResponse> enableUser(@PathVariable String id) {
         return BaseResponse.<UserResponse>ok()
                 .setPayload(userService.enableUser(id));
     }

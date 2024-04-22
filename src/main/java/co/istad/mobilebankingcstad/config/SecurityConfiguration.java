@@ -20,8 +20,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("api/v1/files/**", "images/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .formLogin(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
+               .csrf(AbstractHttpConfigurer::disable).formLogin(AbstractHttpConfigurer::disable)//*disable default login form
+                .httpBasic(Customizer.withDefaults())//*basic auth
                 .build();
     }
 }
