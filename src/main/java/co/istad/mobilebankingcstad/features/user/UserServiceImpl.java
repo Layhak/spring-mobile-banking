@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
         }
 
         User newUser = userMapper.requestToUser(userRequest);
-        newUser.setIsBlocked(false);
-        newUser.setIsDeleted(false);
+        newUser.setBlocked(false);
+        newUser.setDeleted(false);
         newUser.setRoles(roles);
         userRepository.save(newUser);
         return userMapper.toUserResponse(newUser);
