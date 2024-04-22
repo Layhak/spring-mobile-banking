@@ -32,6 +32,7 @@ public class UserRestController {
                     examples = @ExampleObject(value = """
                             {
                                   "fullName": "Heng Layhak",
+                                  "username": "Layhak",
                                   "gender": "male",
                                   "password": "string",
                                   "profileImage": "string",

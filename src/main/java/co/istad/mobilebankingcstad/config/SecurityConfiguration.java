@@ -14,13 +14,19 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests(
-                        (auth) -> auth.requestMatchers("/", "/v3/api-docs/**", "/swagger-ui/**", "/v2/api-docs/**", "/swagger-resource/**")
+                        (auth) -> auth.requestMatchers("/",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/v2/api-docs/**",
+                                        "/swagger-resource/**")
                                 .permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/users/**").permitAll()
                                 .requestMatchers("api/v1/files/**", "images/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-               .csrf(AbstractHttpConfigurer::disable).formLogin(AbstractHttpConfigurer::disable)//*disable default login form
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)//*disable default login form
                 .httpBasic(Customizer.withDefaults())//*basic auth
                 .build();
     }

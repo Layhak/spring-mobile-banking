@@ -41,8 +41,12 @@ public class User {
     private BigDecimal monthlyIncomeRange;
     private String oneSignalId; // for notification
     private String studentIdCard;
-    private Boolean isDeleted;  // for statistic usage!
-    private Boolean isBlocked; // disable
+    private boolean isDeleted;  // for statistic usage!
+    private boolean isBlocked; // disable
+    private boolean isAccountExpired;
+    private boolean isAccountLocked;
+    private boolean isCredentialExpired;
+
     private LocalDateTime createdAt;
 
 }

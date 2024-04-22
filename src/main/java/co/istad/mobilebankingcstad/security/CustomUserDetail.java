@@ -16,9 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 public class CustomUserDetail implements UserDetails {
     private User user;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return user.getRoles();
     }
 
     @Override
@@ -33,21 +34,21 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return !user.isAccountExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !user.isAccountLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !user.isAccountExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !user.isBlocked();
     }
 }
