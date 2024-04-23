@@ -1,8 +1,7 @@
-package security;
+package co.istad.mobilebankingcstad.security;
 
 import co.istad.mobilebankingcstad.domain.User;
 import co.istad.mobilebankingcstad.features.user.UserRepository;
-import co.istad.mobilebankingcstad.security.CustomUserDetail;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,16 +11,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
-@Component
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class JwtToUserConverter implements Converter<Jwt,UsernamePasswordAuthenticationToken> {
-   private final UserRepository userRepository;
+@Component
+public class JwtToUserConverter implements Converter<Jwt, UsernamePasswordAuthenticationToken> {
+    private final UserRepository userRepository;
 
     @Override
     public UsernamePasswordAuthenticationToken convert(Jwt source) {
-        User user = userRepository.findByEmail(source.getSubject()).orElseThrow(()->new BadCredentialsException("Invalid Tokend"));
+        User user = userRepository.findByEmail(source.getSubject()).orElseThrow(() -> new BadCredentialsException("Invalid Tokend"));
         CustomUserDetail customUserDetail = new CustomUserDetail();
         customUserDetail.setUser(user);
         return new UsernamePasswordAuthenticationToken(
