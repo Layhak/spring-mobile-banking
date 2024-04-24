@@ -48,7 +48,7 @@ public class TokenGenerator {
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
                 .issuer("istad.co.mobile-banking")
                 .issuedAt(now)
-                .expiresAt(now.plus(7, ChronoUnit.HOURS))
+                .expiresAt(now.plus(7, ChronoUnit.DAYS))
                 .subject(userDetail.getUsername())
                 .build();
 
@@ -74,6 +74,7 @@ public class TokenGenerator {
         } else {
             refreshToken = createRefreshToken(authentication);
         }
+
         return AuthResponse.builder()
                 .userId(customUserDetail.getUser().getId())
                 .accessToken(createAccessToken(authentication))
