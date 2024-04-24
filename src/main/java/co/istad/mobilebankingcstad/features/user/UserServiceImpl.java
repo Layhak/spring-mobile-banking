@@ -10,6 +10,7 @@ import co.istad.mobilebankingcstad.features.user.dto.UserUpdateRequest;
 import co.istad.mobilebankingcstad.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -56,6 +57,7 @@ public class UserServiceImpl implements UserService {
         newUser.setBlocked(false);
         newUser.setDeleted(false);
         newUser.setRoles(roles);
+        newUser.setPassword(new BCryptPasswordEncoder().encode(newUser.getPassword()));
         userRepository.save(newUser);
         return userMapper.toUserResponse(newUser);
     }
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    will improvise this later bases on the logic of the services
+    //    will improvise this later bases on the logic of the services
     @Override
     public UserResponse disableUser(String id) {
         int affectedRow = userRepository.updateBlockedStatusById(id, true);
@@ -111,6 +113,7 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
     @Override
     public UserResponse enableUser(String id) {
         int affectedRow = userRepository.updateBlockedStatusById(id, false);

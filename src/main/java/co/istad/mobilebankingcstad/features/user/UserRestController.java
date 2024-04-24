@@ -1,15 +1,10 @@
 package co.istad.mobilebankingcstad.features.user;
 
 
-import co.istad.mobilebankingcstad.features.user.dto.UserRequest;
 import co.istad.mobilebankingcstad.features.user.dto.UserResponse;
 import co.istad.mobilebankingcstad.features.user.dto.UserUpdateRequest;
 import co.istad.mobilebankingcstad.utils.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,38 +19,6 @@ import java.util.List;
 public class UserRestController {
     private final UserService userService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Register new user"
-            , requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(schema = @Schema(implementation = UserRequest.class),
-                    examples = @ExampleObject(value = """
-                            {
-                                  "fullName": "Heng Layhak",
-                                  "username": "Layhak",
-                                  "gender": "male",
-                                  "password": "string",
-                                  "profileImage": "string",
-                                  "phoneNumber": "string",
-                                  "cityOrProvince": "string",
-                                  "khanOrDistrict": "string",
-                                  "sangkatOrCommune": "string",
-                                  "employeeType": "string",
-                                  "companyName": "string",
-                                  "mainSourceOfIncome": "string",
-                                  "monthlyIncomeRange": 0,
-                                  "studentIdCard": "string"
-                                }
-                            """)
-
-            )
-    )
-    )
-    public BaseResponse<UserResponse> registerUser(
-            @Valid @RequestBody UserRequest userRequest) {
-        return BaseResponse.<UserResponse>createSuccess()
-                .setPayload(userService.createUser(userRequest));
-    }
 
     @GetMapping
     @Operation(summary = "Get all users")
