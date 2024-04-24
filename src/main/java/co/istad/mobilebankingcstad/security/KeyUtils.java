@@ -1,6 +1,5 @@
 package co.istad.mobilebankingcstad.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -21,8 +20,12 @@ import java.util.Objects;
 
 @Component
 public class KeyUtils {
-    @Autowired
     Environment environment;
+
+    public KeyUtils(Environment environment) {
+        this.environment = environment;
+    }
+
     @Value("${ACCESS_TOKEN_PRIVATE_KEY_PATH}")
     private String accessTokenPrivateKey;
     @Value("${ACCESS_TOKEN_PUBLIC_KEY_PATH}")
