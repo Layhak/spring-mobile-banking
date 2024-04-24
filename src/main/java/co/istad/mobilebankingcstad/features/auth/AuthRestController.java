@@ -1,4 +1,4 @@
-package co.istad.mobilebankingcstad.features.accounts;
+package co.istad.mobilebankingcstad.features.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/auth")
 public class AuthRestController {
     @PostMapping("login")
-    public  String login(){
+    public String login() {
         return "Login Successfully";
     }
 
     @PostMapping("refresh-token")
-    public  String refreshToken(){
-       return  "refresh token" ;
+    public String refreshToken() {
+        return "refresh token";
     }
+
     @PostMapping("register")
-    public  String register(){
-        return  "register user" ;
+    public String register() {
+        return "register user";
     }
 }
