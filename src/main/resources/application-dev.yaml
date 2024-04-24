@@ -19,7 +19,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop # or update
+      ddl-auto: update # or update
     generate-ddl: true
 springdoc:
   swagger-ui:

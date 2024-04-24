@@ -23,11 +23,24 @@ public class AuthRestController {
     private final UserService userService;
 
     @PostMapping("login")
+    @Operation(summary = "Login User"
+            , requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            content = @Content(schema = @Schema(implementation = AuthRequest.class),
+                    examples = @ExampleObject(value = """
+                            {
+                              "email":"layhak@gmail.com",
+                              "password": "string"
+                            }
+                            """)
+            )
+    )
+    )
     public BaseResponse<AuthResponse> login(@RequestBody AuthRequest request) {
         return BaseResponse.<AuthResponse>ok().setPayload(authService.login(request));
     }
 
     @PostMapping("refresh")
+
     public BaseResponse<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         return BaseResponse.<AuthResponse>ok().setPayload(authService.refreshToken(request));
     }
