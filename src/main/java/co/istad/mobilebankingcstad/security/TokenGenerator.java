@@ -21,7 +21,7 @@ public class TokenGenerator {
 
     JwtEncoder jwtRefreshTokenEncoder;
 
-    public TokenGenerator(JwtEncoder jwtRefreshTokenEncoder, @Qualifier("jwtRefreshTokenEncoder") JwtEncoder jwtAccessTokenEncoder) {
+    public TokenGenerator(JwtEncoder jwtAccessTokenEncoder, @Qualifier("jwtRefreshTokenEncoder") JwtEncoder jwtRefreshTokenEncoder) {
         this.jwtRefreshTokenEncoder = jwtRefreshTokenEncoder;
         this.jwtAccessTokenEncoder = jwtAccessTokenEncoder;
     }
@@ -34,7 +34,7 @@ public class TokenGenerator {
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
                 .issuer("istad.co.mobile-banking")
                 .issuedAt(now)
-                .expiresAt(now.plus(5, ChronoUnit.HOURS))
+                .expiresAt(now.plus(15, ChronoUnit.SECONDS))
                 .subject(userDetail.getUsername())
                 .build();
 

@@ -10,11 +10,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@SecurityRequirements({})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/auth")
@@ -32,20 +34,19 @@ public class AuthRestController {
                               "password": "string"
                             }
                             """)
-            )
-    )
-    )
+            )))
     public BaseResponse<AuthResponse> login(@RequestBody AuthRequest request) {
         return BaseResponse.<AuthResponse>ok().setPayload(authService.login(request));
     }
 
+    @SecurityRequirements({})
     @PostMapping("refresh")
-
     public BaseResponse<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         return BaseResponse.<AuthResponse>ok().setPayload(authService.refreshToken(request));
     }
 
 
+    @SecurityRequirements({})
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Register new user"

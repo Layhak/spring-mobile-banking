@@ -10,7 +10,6 @@ spring:
       max-file-size: 5MB
       max-request-size: 5MB
 
-
   datasource:
     username: postgres
     password: 12345678
@@ -24,6 +23,13 @@ spring:
 springdoc:
   swagger-ui:
     path: /
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    org.hibernate.SQL: DEBUG  # To log SQL statements
+    org.hibernate.type: TRACE  # To log bound parameters
 
 # This is for the access token
 ACCESS_TOKEN_PRIVATE_KEY_PATH: access-refresh-token-keys/access-token-private.key

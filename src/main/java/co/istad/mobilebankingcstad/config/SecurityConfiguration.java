@@ -58,12 +58,15 @@ public class SecurityConfiguration {
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",
                                         "/v2/api-docs/**",
-                                        "/swagger-resource/**")
+                                        "/swagger-resources/**")
                                 .permitAll()
-                                .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/users/**").permitAll()
-                                .requestMatchers("api/v1/files/**", "images/**").permitAll()
-                                .requestMatchers("api/v1/accounts/**").permitAll()
+                                .requestMatchers("/api/v1/auth/**")
+                                .permitAll()
+                                // since user will need to upload the picture in order to register
+                                .requestMatchers(
+                                        "api/v1/files/**",
+                                        "images/**")
+                                .permitAll()
                                 .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

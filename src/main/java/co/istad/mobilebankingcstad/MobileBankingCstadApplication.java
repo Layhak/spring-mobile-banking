@@ -13,23 +13,30 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @OpenAPIDefinition(
         info = @Info(
-                title = "Mobile Banking API",
-                version = "1,0",
-                description = "Mobile Banking API for Testing",
+                title = "Mobile Banking API (Data Analytics Class)",
+                version = "1.0",
+                description = "Mobile Banking API",
                 contact = @Contact(
-                        name = "Layhak",
-                        email = "layhak@gmail.com"
-                )
-        ), security = @SecurityRequirement(name = "bearerAuth")
+                        name = "Admin",
+                        email = "admin@gmail.com"
 
+                ),
+                termsOfService = "http://swagger.io/terms/",
+                license = @io.swagger.v3.oas.annotations.info.License(
+                        name = "Apache 2.0",
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.html"
+                )
+        ),
+        security = @SecurityRequirement(name = "bearerAuth")
 )
 @SecurityScheme(
-        name = "beareerAuth",
+        name = "bearerAuth",
         type = SecuritySchemeType.HTTP,
         scheme = "bearer",
         bearerFormat = "JWT",
         in = SecuritySchemeIn.HEADER
 )
+
 public class MobileBankingCstadApplication {
 
     public static void main(String[] args) {
