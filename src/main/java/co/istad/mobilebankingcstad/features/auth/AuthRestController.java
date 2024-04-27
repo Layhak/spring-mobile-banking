@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@SecurityRequirements({})
+@SecurityRequirements(value = {})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/auth")
@@ -39,14 +39,12 @@ public class AuthRestController {
         return BaseResponse.<AuthResponse>ok().setPayload(authService.login(request));
     }
 
-    @SecurityRequirements({})
     @PostMapping("refresh")
     public BaseResponse<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         return BaseResponse.<AuthResponse>ok().setPayload(authService.refreshToken(request));
     }
 
 
-    @SecurityRequirements({})
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Register new user"

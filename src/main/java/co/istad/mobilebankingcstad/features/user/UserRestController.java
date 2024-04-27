@@ -6,7 +6,8 @@ import co.istad.mobilebankingcstad.features.user.dto.UserUpdateRequest;
 import co.istad.mobilebankingcstad.utils.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,36 @@ import java.util.List;
 public class UserRestController {
     private final UserService userService;
 
+//    @GetMapping("/me")
+//    public BaseResponse<UserResponse> getCurrentUserInfo() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String id = "";
+//        if (authentication.getPrincipal() instanceof CustomUserDetail) {
+//            CustomUserDetail customUserDetail = (CustomUserDetail) authentication.getPrincipal();
+//            id = customUserDetail.getUser().getId();
+//        }
+//
+//        return BaseResponse.<UserResponse>ok().setPayload(
+//                userService.getUserById(id)
+//        );
+//    }
+
+    //    @GetMapping("/me")
+//    public BaseResponse<UserResponse> getCurrentUserInfo(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+//        return BaseResponse.<UserResponse>ok().setPayload(
+//                userService.getUserById(customUserDetail.getUser().getId())
+//        );
+//    }
+    @GetMapping("/me")
+    public BaseResponse<UserResponse> getCurrentUserInfo(@AuthenticationPrincipal Jwt jwt) {
+        System.out.println("These are the information extracted from jwt:");
+        System.out.println(jwt.getSubject());
+        System.out.println(jwt.getTokenValue());
+//        System.out.println(jwt.getIssuer());
+        return BaseResponse.<UserResponse>ok().setPayload(
+                userService.getUserById(jwt.getId())
+        );
+    }
 
     @GetMapping
     @Operation(summary = "Get all users")
@@ -37,10 +68,9 @@ public class UserRestController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete user by id")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public BaseResponse<?> deleteUserById(@PathVariable String id) {
         userService.deleteUserById(id);
-        return BaseResponse.ok();
+        return BaseResponse.deleteSuccess();
     }
 
 
