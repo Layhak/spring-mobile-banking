@@ -1,5 +1,6 @@
 package co.istad.mobilebankingcstad;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Objects;
 
 @SpringBootApplication
 @OpenAPIDefinition(
@@ -40,6 +43,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MobileBankingCstadApplication {
 
     public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.load();
+        System.setProperty("SPRING_DATASOURCE_USERNAME", Objects.requireNonNull(dotenv.get("SPRING_DATASOURCE_USERNAME")));
+        System.setProperty("SPRING_DATASOURCE_PASSWORD", Objects.requireNonNull(dotenv.get("SPRING_DATASOURCE_PASSWORD")));
+        System.setProperty("SPRING_DATASOURCE_DBNAME", Objects.requireNonNull(dotenv.get("SPRING_DATASOURCE_DBNAME")));
         SpringApplication.run(MobileBankingCstadApplication.class, args);
     }
 

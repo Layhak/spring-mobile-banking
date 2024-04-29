@@ -11,10 +11,10 @@ spring:
       max-request-size: 5MB
 
   datasource:
-    username: postgres
-    password: 12345678
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/mobile_banking
+    url: jdbc:postgresql://localhost:5432/${SPRING_DATASOURCE_DBNAME}
   jpa:
     show-sql: true
     hibernate:

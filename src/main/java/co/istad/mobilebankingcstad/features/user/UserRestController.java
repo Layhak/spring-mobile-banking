@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/users")
 @RequiredArgsConstructor
-
 //provide default values for requestbody and params
 public class UserRestController {
     private final UserService userService;
