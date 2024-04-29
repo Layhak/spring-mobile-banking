@@ -7,9 +7,7 @@ import co.istad.mobilebankingcstad.features.accounttype.AccountTypeRepository;
 import co.istad.mobilebankingcstad.features.authority.AuthorityRepository;
 import co.istad.mobilebankingcstad.features.roles.RoleRepository;
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.dialect.function.array.ArraySliceUnnestFunction;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class DataInitializer {
 
     @PostConstruct
     void authorityInit() {
-        List<String> authorities = List.of("Read", "Write", "Delete");
+        List<String> authorities = List.of("READ", "WRITE", "DELETE");
         if (authorityRepository.findAll().isEmpty()) {
             authorities.forEach(auth -> {
                 Authority authority = new Authority();
@@ -40,17 +38,17 @@ public class DataInitializer {
 
     @PostConstruct
     void roleInit() {
-        List<String> roles = List.of("Admin", "User");
+        List<String> roles = List.of("ADMIN", "USER");
         if (roleRepository.findAll().isEmpty()) {
             var allAuth = new HashSet<>(authorityRepository.findAll());
             for (var role : roles) {
                 var roleObj = new Role();
-                if (role.equals("Admin")) {
+                if (role.equals("ADMIN")) {
                     roleObj.setAuthorities(new HashSet<>(allAuth));
-                } else if (role.equals("User")) {
+                } else if (role.equals("USER")) {
                     roleObj.setAuthorities(allAuth.stream().filter(authority -> authority
-                            .getName()
-                            .equals("Read"))
+                                    .getName()
+                                    .equals("READ"))
                             .collect(Collectors.toSet()));
                 }
                 roleObj.setName(role);

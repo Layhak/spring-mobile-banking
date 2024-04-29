@@ -1,17 +1,13 @@
 package co.istad.mobilebankingcstad.features.user;
 
 
-import co.istad.mobilebankingcstad.features.user.dto.UserRequest;
 import co.istad.mobilebankingcstad.features.user.dto.UserResponse;
 import co.istad.mobilebankingcstad.features.user.dto.UserUpdateRequest;
 import co.istad.mobilebankingcstad.utils.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,42 +15,39 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/users")
 @RequiredArgsConstructor
-
 //provide default values for requestbody and params
 public class UserRestController {
     private final UserService userService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Register new user"
-            , requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-            content = @Content(schema = @Schema(implementation = UserRequest.class),
-                    examples = @ExampleObject(value = """
-                            {
-                                  "fullName": "Heng Layhak",
-                                  "username": "Layhak",
-                                  "gender": "male",
-                                  "password": "string",
-                                  "profileImage": "string",
-                                  "phoneNumber": "string",
-                                  "cityOrProvince": "string",
-                                  "khanOrDistrict": "string",
-                                  "sangkatOrCommune": "string",
-                                  "employeeType": "string",
-                                  "companyName": "string",
-                                  "mainSourceOfIncome": "string",
-                                  "monthlyIncomeRange": 0,
-                                  "studentIdCard": "string"
-                                }
-                            """)
+//    @GetMapping("/me")
+//    public BaseResponse<UserResponse> getCurrentUserInfo() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String id = "";
+//        if (authentication.getPrincipal() instanceof CustomUserDetail) {
+//            CustomUserDetail customUserDetail = (CustomUserDetail) authentication.getPrincipal();
+//            id = customUserDetail.getUser().getId();
+//        }
+//
+//        return BaseResponse.<UserResponse>ok().setPayload(
+//                userService.getUserById(id)
+//        );
+//    }
 
-            )
-    )
-    )
-    public BaseResponse<UserResponse> registerUser(
-            @Valid @RequestBody UserRequest userRequest) {
-        return BaseResponse.<UserResponse>createSuccess()
-                .setPayload(userService.createUser(userRequest));
+    //    @GetMapping("/me")
+//    public BaseResponse<UserResponse> getCurrentUserInfo(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+//        return BaseResponse.<UserResponse>ok().setPayload(
+//                userService.getUserById(customUserDetail.getUser().getId())
+//        );
+//    }
+    @GetMapping("/me")
+    public BaseResponse<UserResponse> getCurrentUserInfo(@AuthenticationPrincipal Jwt jwt) {
+        System.out.println("These are the information extracted from jwt:");
+        System.out.println(jwt.getSubject());
+        System.out.println(jwt.getTokenValue());
+//        System.out.println(jwt.getIssuer());
+        return BaseResponse.<UserResponse>ok().setPayload(
+                userService.getUserById(jwt.getId())
+        );
     }
 
     @GetMapping
@@ -74,10 +67,9 @@ public class UserRestController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete user by id")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public BaseResponse<?> deleteUserById(@PathVariable String id) {
         userService.deleteUserById(id);
-        return BaseResponse.ok();
+        return BaseResponse.deleteSuccess();
     }
 
 

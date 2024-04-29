@@ -3,14 +3,11 @@ package co.istad.mobilebankingcstad.utils;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.internal.util.annotation.ConstraintAnnotationDescriptor;
 import org.springframework.http.HttpStatus;
-
-import java.lang.annotation.Annotation;
 
 @Accessors(chain = true)
 @Data
-public class BaseResponse <T> {
+public class BaseResponse<T> {
     private T payload;
     private String message;
     private Object metadata; // relates to pagination
@@ -20,30 +17,38 @@ public class BaseResponse <T> {
         return new BaseResponse<T>()
                 .setStatus(HttpStatus.CREATED.value())
                 .setMessage("Created Successfully!!! ")
-        ;
+                ;
     }
+
     public static <T> BaseResponse<T> ok() {
         return new BaseResponse<T>()
                 .setStatus(HttpStatus.OK.value())
                 .setMessage("Successfully Retrieved the data !!! ")
-        ;
+                ;
     }
 
-    public static <T> BaseResponse<T> notFound(){
+    public static <T> BaseResponse<T> notFound() {
         return new BaseResponse<T>()
                 .setStatus(HttpStatus.NOT_FOUND.value())
                 .setMessage("Items could not be found!! ");
     }
-    public static <T> BaseResponse<T> badRequest(){
+
+    public static <T> BaseResponse<T> badRequest() {
         return new BaseResponse<T>()
                 .setStatus(HttpStatus.BAD_REQUEST.value())
                 .setMessage("Bad request provided !");
     }
-    public static <T> BaseResponse<T> updateSuccess(){
+
+    public static <T> BaseResponse<T> updateSuccess() {
         return new BaseResponse<T>()
                 .setStatus(HttpStatus.OK.value())
                 .setMessage("Successfully update the entry!");
     }
 
+    public static <T> BaseResponse<T> deleteSuccess() {
+        return new BaseResponse<T>()
+                .setStatus(HttpStatus.OK.value())
+                .setMessage("Successfully Delete the data!");
+    }
 
 }
